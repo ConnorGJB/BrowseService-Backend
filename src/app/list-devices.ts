@@ -11,18 +11,18 @@ export type ListDevicesResult = {
   error?: string;
 };
 
-/**
+/*
  * Create a use-case for listing products.
  * Usage:
  *   const result = await listProducts({ productRepo });
  */
 export async function listDevices(
-  deps: ListDevicesRepo
+  deps: ListDevicesDeps
 ): Promise<ListDevicesResult> {
-  const { productRepo } = deps;
+  const { deviceRepo } = deps;
 
   try {
-    const devices = await DeviceRepo.list();
+    const devices = await deviceRepo.list();
     return { success: true, data: devices };
   } catch (error) {
     return { success: false, error: (error as Error).message };

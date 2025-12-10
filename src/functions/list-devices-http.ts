@@ -29,9 +29,9 @@ const listDevicesHandler = async (
   };
 };
 
-app.http('listProductsHttp', {
+app.http('listDevicesHttp', {
   methods: ['GET'],
   authLevel: 'anonymous',
-  route: 'products',
+  route: 'devices',
   handler: listDevicesHandler,
 });
