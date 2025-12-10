@@ -1,13 +1,13 @@
-import { ListProductsDeps } from '../app/list-products';
-import { UpsertProductDeps } from '../app/upsert-product';
-import { ProductRepo } from '../domain/product-repo';
+import { ListDevicesDeps } from '../app/list-devices';
+import { UpsertDeviceDeps } from '../app/upsert-devices';
+import { DeviceRepo } from '../domain/device-repo';
 import type { Product } from '../domain/product';
 import { FakeProductRepo } from '../infra/fake-product-repo';
 
-let cachedProductRepo: ProductRepo | null = null;
+let cachedDeviceRepo: DeviceRepo | null = null;
 
-export const getProductRepo = (): ProductRepo => {
-  if (!cachedProductRepo) {
+export const getDeviceRepo = (): DeviceRepo => {
+  if (!cachedDeviceRepo) {
     const now = new Date();
     const initialProducts: Product[] = [
       {
@@ -25,16 +25,16 @@ export const getProductRepo = (): ProductRepo => {
         updatedAt: now,
       },
     ];
-    cachedProductRepo = new FakeProductRepo(initialProducts);
+    cachedDeviceRepo = new FakeProductRepo(initialProducts);
   }
-  return cachedProductRepo;
+  return cachedDeviceRepo;
 };
 
-export const makeListProductsDeps = (): ListProductsDeps => ({
-  productRepo: getProductRepo(),
+export const makeListDevicesDeps = (): ListDevicesDeps => ({
+  deviceRepo: getDeviceRepo(),
 });
 
-export const makeUpsertProductDeps = (): UpsertProductDeps => ({
-  productRepo: getProductRepo(),
+export const makeUpsertDevicesDeps = (): UpsertDeviceDeps => ({
+  deviceRepo: getDeviceRepo(),
   now: () => new Date(),
 });

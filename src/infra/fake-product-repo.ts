@@ -1,5 +1,5 @@
 import { Product } from '../domain/product';
-import { ProductRepo } from '../domain/product-repo';
+import { ProductRepo } from '../domain/device-repo';
 
 /**
  * Fake in-memory implementation of ProductRepo for tests and local dev.
