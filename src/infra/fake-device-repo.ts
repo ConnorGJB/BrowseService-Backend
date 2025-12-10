@@ -1,30 +1,30 @@
-import { Product } from '../domain/product';
-import { ProductRepo } from '../domain/device-repo';
+import { Device } from '../domain/devices';
+import { DeviceRepo } from '../domain/device-repo';
 
 /**
  * Fake in-memory implementation of ProductRepo for tests and local dev.
  * Not safe for concurrency across processes — intended as a fake.
  */
-export class FakeProductRepo implements ProductRepo {
-  private store: Map<string, Product> = new Map();
+export class FakeDeviceRepo implements DeviceRepo {
+  private store: Map<string, Device> = new Map();
 
-  constructor(initial: Product[] = []) {
+  constructor(initial: Device[] = []) {
     for (const p of initial) this.store.set(p.id, { ...p });
   }
 
-  async getById(id: string): Promise<Product | null> {
+  async getById(id: string): Promise<Device | null> {
     const found = this.store.get(id) ?? null;
     // return a shallow clone to avoid accidental external mutation
     return found ? { ...found } : null;
   }
 
-  async list(): Promise<Product[]> {
+  async list(): Promise<Device[]> {
     return Array.from(this.store.values()).map((p) => ({ ...p }));
   }
 
-  async save(product: Product): Promise<Product> {
+  async save(device: Device): Promise<Device> {
     // upsert semantics: store the product, return the saved copy
-    const toStore = { ...product } as Product;
+    const toStore = { ...device } as Device;
     this.store.set(toStore.id, toStore);
     return { ...toStore };
   }

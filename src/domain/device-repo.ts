@@ -1,4 +1,4 @@
-import { Device } from './product';
+import { Device } from './devices';
 
 /**
  * Repository interface for persisting and retrieving Product entities.

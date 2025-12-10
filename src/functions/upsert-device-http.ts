@@ -1,8 +1,8 @@
 import { app, HttpRequest, HttpResponseInit } from '@azure/functions';
-import { upsertProduct } from '../app/upsert-devices';
+import { upsertDevice } from '../app/upsert-devices';
 import { makeUpsertDevicesDeps } from '../config/appServices';
 
-const upsertProductHandler = async (
+const upsertDeviceHandler = async (
   request: HttpRequest
 ): Promise<HttpResponseInit> => {
   try {
@@ -19,9 +19,9 @@ const upsertProductHandler = async (
       };
     }
 
-    const { id, name, pricePence, description } = body;
+    const { id, name, totalQuantity, description } = body;
 
-    if (!id || !name || pricePence === undefined || !description) {
+    if (!id || !name || totalQuantity === undefined || !description) {
       return {
         status: 400,
         jsonBody: {
@@ -32,10 +32,10 @@ const upsertProductHandler = async (
     }
 
     const deps = makeUpsertDevicesDeps();
-    const result = await upsertProduct(deps, {
+    const result = await upsertDevice(deps, {
       id,
       name,
-      pricePence,
+      totalQuantity,
       description,
     });
 
@@ -69,9 +69,9 @@ const upsertProductHandler = async (
   }
 };
 
-app.http('upsertProductHttp', {
+app.http('upsertDeviceHttp', {
   methods: ['PUT', 'POST'],
   authLevel: 'anonymous',
   route: 'products',
-  handler: upsertProductHandler,
+  handler: upsertDeviceHandler,
 });

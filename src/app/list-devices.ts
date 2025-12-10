@@ -1,5 +1,5 @@
 import { Device } from '../domain/devices';
-import { deviceRepo } from '../domain/device-repo';
+import { DeviceRepo } from '../domain/device-repo';
 
 export type ListDevicesDeps = {
   deviceRepo: DeviceRepo;
@@ -22,7 +22,7 @@ export async function listDevices(
   const { productRepo } = deps;
 
   try {
-    const devices = await deviceRepo.list();
+    const devices = await DeviceRepo.list();
     return { success: true, data: devices };
   } catch (error) {
     return { success: false, error: (error as Error).message };

@@ -12,7 +12,7 @@ export type UpsertProductDeps = UpsertDeviceDeps;
 export type UpsertDeviceCommand = {
   id: string;
   name: string;
-  pricePence: number;
+  totalQuantity: number;
   description: string;
 };
 

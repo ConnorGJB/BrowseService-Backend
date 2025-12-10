@@ -1,7 +1,7 @@
 export type Device = {
   id: string;
   name: string;
-  pricePence: number;
+  totalQuantity: number;
   description: string;
   updatedAt: Date;
 };
@@ -9,7 +9,7 @@ export type Device = {
 export type CreateDeviceParams = {
   id: string;
   name: string;
-  pricePence: number;
+  totalQuantity: number;
   description: string;
   updatedAt: Date;
 };
@@ -33,13 +33,13 @@ const validateDevice = (params: CreateDeviceParams): void => {
     throw new DeviceError('name', 'Device name must be a non-empty string.');
   }
   if (
-    typeof params.pricePence !== 'number' ||
-    params.pricePence < 0 ||
-    !Number.isInteger(params.pricePence)
+    typeof params.totalQuantity !== 'number' ||
+    params.totalQuantity < 0 ||
+    !Number.isInteger(params.totalQuantity)
   ) {
     throw new DeviceError(
-      'pricePence',
-      'Device pricePence must be a non-negative integer.'
+      'totalQuantity',
+      'Device totalQuantity must be a non-negative integer.'
     );
   }
   if (
@@ -69,13 +69,8 @@ export const createDevice = (params: CreateDeviceParams): Device => {
   return {
     id: params.id,
     name: params.name,
-    pricePence: params.pricePence,
+    totalQuantity: params.totalQuantity,
     description: params.description,
     updatedAt: params.updatedAt,
   };
 };
-
-// Backwards-compatible aliases for incremental refactor
-export type Product = Device;
-export type CreateProductParams = CreateDeviceParams;
-export { createDevice as createProduct, DeviceError as ProductError };
