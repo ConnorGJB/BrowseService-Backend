@@ -9,7 +9,7 @@ let cachedDeviceRepo: DeviceRepo | null = null;
 export const getDeviceRepo = (): DeviceRepo => {
   if (!cachedDeviceRepo) {
     const now = new Date();
-    const initialProducts: Device[] = [
+    const initialDevices: Device[] = [
       {
         id: 'p-001',
         name: 'Dell Laptop',
@@ -25,7 +25,7 @@ export const getDeviceRepo = (): DeviceRepo => {
         updatedAt: now,
       },
     ];
-    cachedDeviceRepo = new FakeDeviceRepo(initialProducts);
+    cachedDeviceRepo = new FakeDeviceRepo(initialDevices);
   }
   return cachedDeviceRepo;
 };
