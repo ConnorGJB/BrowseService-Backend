@@ -9,10 +9,9 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    
     "test": "vitest run",
-"test:watch": "vitest --watch",
-"test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
     "seed": "ts-node src/seed/seed.ts"
   },
   "dependencies": {
