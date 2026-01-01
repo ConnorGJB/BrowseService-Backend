@@ -83,6 +83,6 @@ const upsertDeviceHandler = async (
 app.http('upsertDeviceHttp', {
   methods: ['PUT', 'POST'],
   authLevel: 'anonymous',
-  route: 'catalogue-items',
+  route: 'devices/upsert',
   handler: upsertDeviceHandler,
 });
