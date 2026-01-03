@@ -2,15 +2,26 @@ import { app, HttpRequest, HttpResponseInit } from '@azure/functions';
 import { listDevices } from '../app/list-devices';
 import { makeListDevicesDeps } from '../config/appServices';
 
+const getCorsHeaders = () => ({
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+});
+
 const listDevicesHandler = async (
-  _request: HttpRequest
+  request: HttpRequest
 ): Promise<HttpResponseInit> => {
+  if (request.method === 'OPTIONS') {
+    return { status: 204, headers: getCorsHeaders() };
+  }
+
   const deps = makeListDevicesDeps();
   const result = await listDevices(deps);
 
   if (!result.success) {
     return {
       status: 500,
+      headers: { 'Content-Type': 'application/json', ...getCorsHeaders() },
       jsonBody: {
         success: false,
         message: 'Failed to list devieces',
@@ -22,6 +33,7 @@ const listDevicesHandler = async (
   const devices = result.data ?? [];
   return {
     status: 200,
+    headers: { 'Content-Type': 'application/json', ...getCorsHeaders() },
     jsonBody: devices.map((devices) => ({
       ...devices,
       updatedAt: devices.updatedAt.toISOString(),
@@ -30,7 +42,7 @@ const listDevicesHandler = async (
 };
 
 app.http('listDevicesHttp', {
-  methods: ['GET'],
+  methods: ['GET', 'OPTIONS'],
   authLevel: 'anonymous',
   route: 'devices',
   handler: listDevicesHandler,
