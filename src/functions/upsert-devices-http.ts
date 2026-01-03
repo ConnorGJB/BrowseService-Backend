@@ -2,7 +2,11 @@ import { app, HttpRequest, HttpResponseInit } from '@azure/functions';
 import { upsertDevice } from '../app/upsert-devices';
 import { makeUpsertDevicesDeps } from '../config/appServices';
 
-const getCorsHeaders = () => ({});
+const getCorsHeaders = () => ({
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+});
 
 const upsertDeviceHandler = async (
   request: HttpRequest
@@ -25,16 +29,17 @@ const upsertDeviceHandler = async (
       };
     }
 
-    const { id, name, totalQuantity, description } = body;
+    const { id, name, totalQuantity, description, category } = body;
+    const desc = description || category;
 
-    if (!id || !name || totalQuantity === undefined || !description) {
+    if (!id || !name || totalQuantity === undefined || !desc) {
       return {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...getCorsHeaders() },
         jsonBody: {
           success: false,
           message:
-            'Missing required fields: id, name, totalQuantity, description',
+            'Missing required fields: id, name, totalQuantity, description (or category)',
         },
       };
     }
@@ -44,7 +49,7 @@ const upsertDeviceHandler = async (
       id,
       name,
       totalQuantity,
-      description,
+      description: desc,
     });
 
     if (!result.success) {
@@ -81,8 +86,8 @@ const upsertDeviceHandler = async (
 };
 
 app.http('upsertDeviceHttp', {
-  methods: ['PUT', 'POST'],
+  methods: ['PUT', 'POST', 'OPTIONS'],
   authLevel: 'anonymous',
-  route: 'catalogue-items',
+  route: 'devices/{id?}',
   handler: upsertDeviceHandler,
 });

@@ -2,7 +2,11 @@ import { app, HttpRequest, HttpResponseInit } from '@azure/functions';
 import { listDevices } from '../app/list-devices';
 import { makeListDevicesDeps } from '../config/appServices';
 
-const getCorsHeaders = () => ({});
+const getCorsHeaders = () => ({
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+});
 
 const listDevicesHandler = async (
   request: HttpRequest
