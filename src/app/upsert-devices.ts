@@ -13,6 +13,7 @@ export type UpsertDeviceCommand = {
   id: string;
   name: string;
   totalQuantity: number;
+  category: string;
   description: string;
 };
 

@@ -23,6 +23,7 @@ export type CosmosDeviceDocument = {
   id: string; // also used as partition key per container config ("/id")
   name: string;
   totalQuantity: number;
+  category: string;
   description: string;
   updatedAt: string; // ISO 8601 string
 };
@@ -107,6 +108,7 @@ const toDocument = (device: Device): CosmosDeviceDocument => ({
   id: device.id,
   name: device.name,
   totalQuantity: device.totalQuantity,
+  category: device.category,
   description: device.description,
   updatedAt: device.updatedAt.toISOString(),
 });
@@ -115,6 +117,7 @@ const fromDocument = (doc: CosmosDeviceDocument): Device => ({
   id: doc.id,
   name: doc.name,
   totalQuantity: doc.totalQuantity,
+  category: doc.category,
   description: doc.description,
   updatedAt: new Date(doc.updatedAt),
 });

@@ -9,6 +9,7 @@ describe('createDevice', () => {
         id: 'prod-123',
         name: 'Test device',
         totalQuantity: 1999,
+        category: 'Electronics',
         description: 'A great test product',
         updatedAt: new Date('2025-01-01'),
       };
@@ -30,6 +31,7 @@ describe('createDevice', () => {
         id: '   ',
         name: 'Test device',
         totalQuantity: 1999,
+        category: 'Electronics',
         description: 'A test device',
         updatedAt: new Date(),
       };

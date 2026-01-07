@@ -1,0 +1,17 @@
+{
+  "specversion": "1.0",
+  "type": "catalogue.device.updated",
+  "source": "/catalogue/devices",
+  "subject": "devices/dev-12345",
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "time": "2025-10-26T10:30:00Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "id": "dev-12345",
+    "name": "Premium Laptop",
+    "totalQuantity": 15,
+    "category": "Laptop",
+    "description": "High-performance laptop suitable for development and design work",
+    "updatedAt": "2025-10-26T10:30:00.000Z"
+  }
+}

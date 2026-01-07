@@ -25,17 +25,22 @@ const upsertDeviceHandler = async (
       };
     }
 
-    const { id, name, totalQuantity, description, category } = body;
-    const desc = description || category;
+    const { id, name, totalQuantity, category, description } = body;
 
-    if (!id || !name || totalQuantity === undefined || !desc) {
+    if (
+      !id ||
+      !name ||
+      totalQuantity === undefined ||
+      !category ||
+      !description
+    ) {
       return {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...getCorsHeaders() },
         jsonBody: {
           success: false,
           message:
-            'Missing required fields: id, name, totalQuantity, description (or category)',
+            'Missing required fields: id, name, totalQuantity, category, description',
         },
       };
     }
@@ -45,7 +50,8 @@ const upsertDeviceHandler = async (
       id,
       name,
       totalQuantity,
-      description: desc,
+      category,
+      description,
     });
 
     if (!result.success) {

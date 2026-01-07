@@ -2,6 +2,7 @@ export type Device = {
   id: string;
   name: string;
   totalQuantity: number;
+  category: string;
   description: string;
   updatedAt: Date;
 };
@@ -10,6 +11,7 @@ export type CreateDeviceParams = {
   id: string;
   name: string;
   totalQuantity: number;
+  category: string;
   description: string;
   updatedAt: Date;
 };
@@ -43,6 +45,16 @@ const validateDevice = (params: CreateDeviceParams): void => {
     );
   }
   if (
+    !params.category ||
+    typeof params.category !== 'string' ||
+    params.category.trim() === ''
+  ) {
+    throw new DeviceError(
+      'category',
+      'Device category must be a non-empty string.'
+    );
+  }
+  if (
     !params.description ||
     typeof params.description !== 'string' ||
     params.description.trim() === ''
@@ -70,6 +82,7 @@ export const createDevice = (params: CreateDeviceParams): Device => {
     id: params.id,
     name: params.name,
     totalQuantity: params.totalQuantity,
+    category: params.category,
     description: params.description,
     updatedAt: params.updatedAt,
   };
