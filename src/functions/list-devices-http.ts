@@ -11,10 +11,6 @@ const getCorsHeaders = () => ({
 const listDevicesHandler = async (
   request: HttpRequest
 ): Promise<HttpResponseInit> => {
-  if (request.method === 'OPTIONS') {
-    return { status: 204, headers: getCorsHeaders() };
-  }
-
   const deps = makeListDevicesDeps();
   const result = await listDevices(deps);
 
@@ -42,7 +38,7 @@ const listDevicesHandler = async (
 };
 
 app.http('listDevicesHttp', {
-  methods: ['GET', 'OPTIONS'],
+  methods: ['GET'],
   authLevel: 'anonymous',
   route: 'devices',
   handler: listDevicesHandler,
